@@ -1,4 +1,4 @@
-# Toronto Data Explorer
+# Toronto Permit Pulse
 
 Ask plain English questions about Toronto building permits and neighbourhood demographics — get instant SQL answers.
 

@@ -47,8 +47,8 @@ def explain_sql(sql: str, client: anthropic.Anthropic) -> str:
 
 
 def main():
-    st.set_page_config(page_title="Toronto Data Explorer", layout="wide")
-    st.title("Toronto Data Explorer")
+    st.set_page_config(page_title="Toronto Permit Pulse", layout="wide")
+    st.title("Toronto Permit Pulse")
 
     if not DB_PATH.exists():
         with st.spinner("Setting up database for first time, this may take a minute..."):
