@@ -24,9 +24,19 @@ Rules:
 Schema:
 {schema}
 
-Example:
+neighbourhood_profiles table structure:
+- Each ROW is a demographic characteristic (e.g. 'Population, 2016', 'Median household income').
+- The Characteristic column contains the row label.
+- Every other column is a neighbourhood name (e.g. "Annex", "Rosedale-Moore Park").
+- To look up a value for a specific neighbourhood, SELECT that neighbourhood's column WHERE Characteristic matches the label.
+- neighbourhood names with spaces or special characters must be quoted with double quotes in SQL.
+
+Examples:
 Q: How many building permits were issued in 2024?
 A: SELECT COUNT(*) FROM building_permits WHERE YEAR(ISSUED_DATE) = 2024
+
+Q: What is the population of the Annex neighbourhood?
+A: SELECT Characteristic, "Annex" FROM neighbourhood_profiles WHERE Characteristic = 'Population, 2016'
 """
 
 
