@@ -12,8 +12,14 @@ load_dotenv(Path(__file__).parent / ".env")
 sys.path.insert(0, str(Path(__file__).parent / "scripts"))
 from schema import get_schema
 from query_engine import nl_to_sql, run_query, MODEL
+from load_data import setup_database
 
 DB_PATH = Path(__file__).parent / "toronto.duckdb"
+
+
+@st.cache_resource(show_spinner=False)
+def _ensure_database() -> None:
+    setup_database()
 
 EXAMPLES = [
     "How many building permits were issued in 2024?",
@@ -43,6 +49,12 @@ def explain_sql(sql: str, client: anthropic.Anthropic) -> str:
 def main():
     st.set_page_config(page_title="Toronto Data Explorer", layout="wide")
     st.title("Toronto Data Explorer")
+
+    if not DB_PATH.exists():
+        with st.spinner("Setting up database for first time, this may take a minute..."):
+            _ensure_database()
+    else:
+        _ensure_database()
 
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 

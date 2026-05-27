@@ -70,7 +70,10 @@ def load_to_duckdb() -> None:
     con.close()
 
 
-def main():
+def setup_database() -> None:
+    """Download CSVs and load into DuckDB. Safe to call if already done."""
+    if DB_PATH.exists():
+        return
     DATA_DIR.mkdir(exist_ok=True)
     for package, filename in DATASETS.items():
         dest = DATA_DIR / filename
@@ -83,8 +86,11 @@ def main():
             print(f"  No CSV resource found for {package}")
             continue
         download(url, dest)
-
     load_to_duckdb()
+
+
+def main():
+    setup_database()
 
 
 if __name__ == "__main__":
